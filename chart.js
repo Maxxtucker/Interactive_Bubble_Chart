@@ -65,7 +65,7 @@ d3.json("data.json").then(data => {
         .attr("text-anchor", "middle")
         .attr("x", width / 2)
         .attr("y", height + 40)
-        .text("EBIDTA Margin")
+        .text("EBITDA Margin")
         .style("font-family", "Nunito");
 
     // Add y-axis label
@@ -224,19 +224,29 @@ d3.json("data.json").then(data => {
                     .attr("class", "circle-q1");
 
                 // Draw connecting line with an arrow marker
-                
                 g.append("line")
                     .attr("x1", xScale(d.Q1.EBITDAMargin))
                     .attr("y1", yScale(d.Q1.RevenueGrowth))
                     .attr("x2", xScale(d.Q2.EBITDAMargin))
                     .attr("y2", yScale(d.Q2.RevenueGrowth))
                     .attr("stroke", d.color)
-                    .attr("stroke-width", 1);
-                
+                    .attr("stroke-width", 1)
+                    .attr("marker-end", "url(#arrow)"); // Ensure arrow marker is correctly defined
             });
 
             // Hide the tooltip
             tooltip.transition().duration(200).style("opacity", 0);
+        });
+
+    // Add a "Reset" button to refresh the graph
+    d3.select("body").append("button")
+        .text("Reset")
+        .style("position", "absolute")
+        .style("left", "100px")
+        .style("top", "20px")
+        .on("click", function() {
+            // Reload the page to reset the graph to its original state
+            location.reload();
         });
 
     svg.append("text")
