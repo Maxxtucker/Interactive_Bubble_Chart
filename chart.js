@@ -104,7 +104,8 @@ function csvToObjects(csvText, sheetName) {
         values.slice(1).forEach((value, i) => {
             if (value && companies[i]) {
                 const company = companies[i].trim().replace(/['"]+/g, '').toLowerCase();
-                if (company === 'almosafer' || (quarter !== '2024 Q2' && quarter !== '2024 Q3')) return;
+                // Only include data for '2024 Q3'
+                if (quarter !== '2024 Q3') return;
                 const cleanedValue = value.trim().replace(/['"$%]+/g, '');
                 const parsedValue = parseFloat(cleanedValue);
                 if (isNaN(parsedValue)) return;
@@ -362,7 +363,7 @@ Promise.all([
         .attr("class", "quarter-label")
         .attr("x", d => xScale(d.ebitdaMargin) + 8) // Adjust position as needed
         .attr("y", d => yScale(d.revenueGrowth) + 4) // Adjust position as needed
-        .text(d => d.quarter.includes('Q2') ? 'Q2' : 'Q3')
+        .text(d => d.quarter.includes('Q2') ? 'Q3' : 'Q3')
         .style("font-size", "12px")
         .style("font-family", "Nunito")
         .style("fill", "black");
